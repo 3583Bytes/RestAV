@@ -18,7 +18,7 @@ namespace RestAV.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetAsych()
         {
-            Task.WaitAll(Scanner.ClamAVVerify());
+            Task.WaitAll(Scanner.Verify());
 
             return new string[] { "RestAV API v1.0", Scanner.ClamAVStatus };
         }
@@ -65,7 +65,7 @@ namespace RestAV.Controllers
 
             if (fileScanInfo.Mode == 1)
             {
-                Scanner.ScanBytes(fileScanInfo.FileData, fileGUID);
+                Scanner.ScanBytes(fileScanInfo.FileData, fileGUID).Wait();
                 return new string[] { "GUID", fileGUID.ToString() };
             }
             else
@@ -74,16 +74,6 @@ namespace RestAV.Controllers
             }
 
             ScanResults result = Scanner.ScanHistory.Find(x => x.FileGUID == fileGUID);
-
-            /*if (fileScanInfo.Mode == 1)
-            {
-                return new string[] { "GUID", fileGUID.ToString() };
-            }
-
-            do
-            {
-                //Wait for Verify Scan Method to Finish
-            } while (result.ScanResult == null);*/
 
             watch.Stop();
 

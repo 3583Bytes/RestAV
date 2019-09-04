@@ -13,7 +13,11 @@ namespace RestAV.Helpers
         public static string ClamAVServer = "localhost";
         public static string ClamAVStatus = "";
 
-        public static async Task ClamAVVerify()
+        /// <summary>
+        /// Verify that ClamAV is running
+        /// </summary>
+        /// <returns></returns>
+        public static async Task Verify()
         {
             ClamClient clam = new ClamClient(ClamAVServer, ClamAVPort);
 
@@ -21,11 +25,11 @@ namespace RestAV.Helpers
 
             if (result)
             {
-                ClamAVStatus = "ClamAV Running";
+                ClamAVStatus = "Clam AV Running";
             }
             else
             {
-                ClamAVStatus = "Failed to Communicate with ClamAV";
+                ClamAVStatus = "Failed to Communicate with Clam AV";
             }
 
         }
@@ -50,8 +54,13 @@ namespace RestAV.Helpers
             }
         }
 
+        /// <summary>
+        /// Scans a local file, this is not used since the file has to be localy available on the server
+        /// </summary>
+        /// <param name="filePath">Local path to the file to be scanned</param>
+        /// <param name="fileGUID">The Results GUID used to index for scan result</param>
+        /// <returns></returns>
 
-        //Scans a local file, this is not used since the file has to be localy available on the server
         private static async Task ScanFile(string filePath, Guid fileGUID)
         {
             try
@@ -84,7 +93,7 @@ namespace RestAV.Helpers
         /// Scans an array of Base64 encoded bytes
         /// </summary>
         /// <param name="fileData">The Data to be scanned</param>
-        /// <param name="fileGUID">The Results GUID to store </param>
+        /// <param name="fileGUID">The Results GUID used to index for scan result</param>
         /// <returns></returns>
         public static async Task ScanBytes(byte[] fileData, Guid fileGUID)
         {

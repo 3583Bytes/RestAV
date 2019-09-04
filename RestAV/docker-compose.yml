@@ -1,0 +1,7 @@
+version: '3.4'
+
+services:
+  webapp:
+    image: mcr.microsoft.com/dotnet/core/aspnet
+  clamav-server:
+    image: mkodockx/docker-clamav
