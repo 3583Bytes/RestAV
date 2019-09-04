@@ -13,14 +13,7 @@ namespace RestAV.Helpers
         public static string ClamAVServer = "localhost";
         public static string ClamAVStatus = "";
 
-
-
-        public static void Verify()
-        {
-            ClamAVVerify();
-        }
-
-        private static async void ClamAVVerify()
+        public static async Task ClamAVVerify()
         {
             ClamClient clam = new ClamClient(ClamAVServer, ClamAVPort);
 
@@ -35,28 +28,6 @@ namespace RestAV.Helpers
                 ClamAVStatus = "Failed to Communicate with ClamAV";
             }
 
-        }
-
-        public static Guid ScanFileAsync(string filePath)
-        {
-            Guid fileGUID = Guid.NewGuid();
-
-            ScanHistory.Add(new ScanResults(fileGUID));
-
-            ClamAVScanFile(filePath, fileGUID);
-
-            return fileGUID;
-        }
-
-        public static Guid ScanBytesAsync(byte[] fileData)
-        {
-            Guid fileGUID = Guid.NewGuid();
-
-            ScanHistory.Add(new ScanResults(fileGUID));
-
-            ClamAVScanBytes(fileData, fileGUID);
-
-            return fileGUID;
         }
 
         public static void DisplayResults(Guid fileGUID)
@@ -79,7 +50,9 @@ namespace RestAV.Helpers
             }
         }
 
-        private static async void ClamAVScanFile(string filePath, Guid fileGUID)
+
+        //Scans a local file, this is not used since the file has to be localy available on the server
+        private static async Task ScanFile(string filePath, Guid fileGUID)
         {
             try
             {
@@ -107,7 +80,13 @@ namespace RestAV.Helpers
             }
         }
 
-        private static async void ClamAVScanBytes(byte[] fileData, Guid fileGUID)
+        /// <summary>
+        /// Scans an array of Base64 encoded bytes
+        /// </summary>
+        /// <param name="fileData">The Data to be scanned</param>
+        /// <param name="fileGUID">The Results GUID to store </param>
+        /// <returns></returns>
+        public static async Task ScanBytes(byte[] fileData, Guid fileGUID)
         {
             try
             {

@@ -16,16 +16,9 @@ namespace RestAV.Controllers
     {
         // GET api/RestAV
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> GetAsych()
         {
-            Scanner.Verify();
-
-            do
-            {
-                //Wait for Verify Async Method to Finish
-
-            } while (String.IsNullOrEmpty(Scanner.ClamAVStatus));
-
+            Task.WaitAll(Scanner.ClamAVVerify());
 
             return new string[] { "RestAV API v1.0", Scanner.ClamAVStatus };
         }
@@ -59,21 +52,30 @@ namespace RestAV.Controllers
 
         // POST api/RestAV
         [HttpPost]
-        public string[] Post([FromBody] FileScanInfo fileScanInfo)
+        public string[] PostAsync([FromBody] FileScanInfo fileScanInfo)
         {
             Stopwatch watch = new Stopwatch();
 
             watch.Start();
-            Guid fileGUID = new Guid();
+            Guid fileGUID = Guid.NewGuid();
+
+            Scanner.ScanHistory.Add(new ScanResults(fileGUID));
 
             //fileGUID = Scanner.ScanFileAsync(fileScanInfo.FilePath);
 
-            fileGUID = Scanner.ScanBytesAsync(fileScanInfo.FileData);
-
+            if (fileScanInfo.Mode == 1)
+            {
+                Scanner.ScanBytes(fileScanInfo.FileData, fileGUID);
+                return new string[] { "GUID", fileGUID.ToString() };
+            }
+            else
+            {
+                Task.WaitAll(Scanner.ScanBytes(fileScanInfo.FileData, fileGUID));
+            }
 
             ScanResults result = Scanner.ScanHistory.Find(x => x.FileGUID == fileGUID);
 
-            if (fileScanInfo.Mode == 1)
+            /*if (fileScanInfo.Mode == 1)
             {
                 return new string[] { "GUID", fileGUID.ToString() };
             }
@@ -81,7 +83,7 @@ namespace RestAV.Controllers
             do
             {
                 //Wait for Verify Scan Method to Finish
-            } while (result.ScanResult == null);
+            } while (result.ScanResult == null);*/
 
             watch.Stop();
 
