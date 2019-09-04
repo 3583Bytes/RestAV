@@ -18,8 +18,17 @@ namespace RestAV.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> GetAsych()
         {
-            Task.WaitAll(Scanner.Verify());
+            try
+            {
+                Task.WaitAll(Scanner.Verify());
 
+            }
+            catch (Exception exception)
+            {
+                Scanner.ClamAVStatus = exception.Message;
+            }
+
+            
             return new string[] { "RestAV API v1.0", Scanner.ClamAVStatus };
         }
 

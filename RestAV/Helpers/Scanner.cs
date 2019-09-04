@@ -10,7 +10,7 @@ namespace RestAV.Helpers
     {
         public static List<ScanResults> ScanHistory = new List<ScanResults>();
         public static int ClamAVPort = 3310;
-        public static string ClamAVServer = "localhost";
+        public static string ClamAVServer = "clamav-server";
         public static string ClamAVStatus = "";
 
         /// <summary>

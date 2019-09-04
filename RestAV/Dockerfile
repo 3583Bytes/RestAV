@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["RestAV/RestAV.csproj", "RestAV/"]
+COPY ["nClam/nClam.csproj", "nClam/"]
 RUN dotnet restore "RestAV/RestAV.csproj"
 COPY . .
 WORKDIR "/src/RestAV"

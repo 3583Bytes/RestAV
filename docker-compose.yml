@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  clamav-server:
+    image: mkodockx/docker-clamav  
+    networks:
+      - clamav
+  restav:
+    image: ${DOCKER_REGISTRY-}restav
+    build:
+      context: .
+      dockerfile: RestAV/Dockerfile
+    networks:
+      - clamav
+networks:
+   clamav:
