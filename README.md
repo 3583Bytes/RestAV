@@ -5,11 +5,11 @@ This is a .Net core Web Rest API that will accept a multipart/from-data Post req
 
 This will run in a docker container that is defined in [docker-compose.yml](https://github.com/3583Bytes/RestAV/blob/master/docker-compose.yml) which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.
 
-RestAV API Methods:
+##RestAV API Methods:
 
-Post:
+### Post:
 
-ScanFile: Accepts a multipart/from-data file to scan and provides synchronous result:
+*ScanFile*: Accepts a multipart/from-data file to scan and provides synchronous result:
 Returns:
 [
     "Result",
@@ -19,16 +19,16 @@ Returns:
 ]
 
 
-ScanFileAsync: Accepts a multipart/from-data file to scan and provides a GUID which can be used to asynchrounously fetch a result
+*/api/RestAV/ScanFileAsync*: Accepts a multipart/from-data file to scan and provides a GUID which can be used to asynchrounously fetch a result
 Returns:
 [
     "GUID",
     "0cc52015-2217-4c20-be93-907fb680d6ae"
 ]
 
-Get:
+### Get:
 
-/api/RestAV/0cc52015-2217-4c20-be93-907fb680d6ae
+*/api/RestAV/{GUID}*
 
 [
     "Result",
