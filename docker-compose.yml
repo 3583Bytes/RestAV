@@ -12,6 +12,7 @@ services:
       dockerfile: RestAV/Dockerfile
     ports:
       - "443:443"
+      - "4080:80"
     networks:
       - clamav
 networks:
