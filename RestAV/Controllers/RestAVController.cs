@@ -32,8 +32,7 @@ namespace RestAV.Controllers
             return new string[] { "RestAV API v1.0", Scanner.ClamAVStatus };
         }
 
-
-        // GET api/RestAV/5
+        // GET api/RestAV/{GUID}
         [HttpGet("{guid}")]
         public ActionResult<string[]> Get(string guid)
         {
@@ -59,47 +58,70 @@ namespace RestAV.Controllers
             return new string[] { "Unavailable", guid.ToString() };
         }
 
-        // POST api/RestAV
-        [HttpPost]
-        public string[] PostAsync([FromBody] FileScanInfo fileScanInfo)
+        // GET api/RestAV/FileAsync
+        [HttpPost("ScanFileAsync")]
+        public string[] PostAsync([FromForm] IFormFile ScanFile, [FromForm] String APIKey)
+        {
+           
+            if (ScanFile.Length > 0)
+            {
+                Guid fileGUID = Guid.NewGuid();
+
+                //Add to History so we can update it once scan is done
+                Scanner.ScanHistory.Add(new ScanResults(fileGUID));
+
+                //Scan Stream
+                Scanner.ScanStream(ScanFile.OpenReadStream(), fileGUID).Wait();
+                
+                //Return GUID
+                return new string[] { "GUID", fileGUID.ToString() };
+               
+            }
+
+            return new string[] { "Error ", "No File Stream Found" };
+
+        }
+
+        // GET api/RestAV/FileSync
+        [HttpPost("ScanFile")]
+        public string[] Post([FromForm] IFormFile ScanFile, [FromForm] String APIKey)
         {
             Stopwatch watch = new Stopwatch();
-
             watch.Start();
-            Guid fileGUID = Guid.NewGuid();
 
-            Scanner.ScanHistory.Add(new ScanResults(fileGUID));
-
-            //fileGUID = Scanner.ScanFileAsync(fileScanInfo.FilePath);
-
-            if (fileScanInfo.Mode == 1)
+            if (ScanFile.Length > 0)
             {
-                Scanner.ScanBytes(fileScanInfo.FileData, fileGUID).Wait();
-                return new string[] { "GUID", fileGUID.ToString() };
-            }
-            else
-            {
-                Task.WaitAll(Scanner.ScanBytes(fileScanInfo.FileData, fileGUID));
-            }
+                Guid fileGUID = Guid.NewGuid();
 
-            ScanResults result = Scanner.ScanHistory.Find(x => x.FileGUID == fileGUID);
+                //Add to History so we can update it once scan is done
+                Scanner.ScanHistory.Add(new ScanResults(fileGUID));
 
-            watch.Stop();
+                Task.WaitAll(Scanner.ScanStream(ScanFile.OpenReadStream(), fileGUID));
 
-            switch (result.ScanResult.Result)
-            {
-                case ClamScanResults.Clean:
-                    return new string[] { "Result", "Clean", "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
+                ScanResults result = Scanner.ScanHistory.Find(x => x.FileGUID == fileGUID);
 
-                case ClamScanResults.VirusDetected:
-                    return new string[] { "Result", "Infected", "File", result.ScanResult.InfectedFiles.First().FileName.Replace("\\\\?\\", ""), "Virus" + result.ScanResult.InfectedFiles.First().VirusName, "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
+                watch.Stop();
 
-                case ClamScanResults.Error:
-                    return new string[] { "Result", "Error", "Details", result.ScanResult.RawResult.Replace("\\\\?\\", ""), "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
+                switch (result.ScanResult.Result)
+                {
+                    case ClamScanResults.Clean:
+                        return new string[] { "Result", "Clean", "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
 
+                    case ClamScanResults.VirusDetected:
+                        return new string[] { "Result", "Infected", "File", result.ScanResult.InfectedFiles.First().FileName.Replace("\\\\?\\", ""), "Virus" + result.ScanResult.InfectedFiles.First().VirusName, "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
+
+                    case ClamScanResults.Error:
+                        return new string[] { "Result", "Error", "Details", result.ScanResult.RawResult.Replace("\\\\?\\", ""), "TotalSeconds", watch.Elapsed.TotalSeconds.ToString() };
+
+                }
+
+                return new string[] { "Scanning ", fileGUID.ToString() };
+                
             }
 
-            return new string[] { "Scanning ", fileGUID.ToString() };
+            return new string[] { "Error ", "No File Stream Found" };
+
         }
+
     }
 }

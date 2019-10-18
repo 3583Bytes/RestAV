@@ -1,6 +1,7 @@
 ﻿using nClam;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,11 @@ namespace RestAV.Helpers
     {
         public static List<ScanResults> ScanHistory = new List<ScanResults>();
         public static int ClamAVPort = 3310;
-        public static string ClamAVServer = "clamav-server";
+
+        //For Docker Deployment
+        //public static string ClamAVServer = "clamav-server";
+
+        public static string ClamAVServer = "localhost";
         public static string ClamAVStatus = "";
 
         /// <summary>
@@ -88,6 +93,45 @@ namespace RestAV.Helpers
 
             }
         }
+
+
+
+        /// <summary>
+        /// Scans a Stream
+        /// </summary>
+        /// <param name="sourceStream">The Stream to be scanned</param>
+        /// <param name="fileGUID">The Results GUID used to index for scan result</param>
+        /// <returns></returns>
+        public static async Task ScanStream(Stream sourceStream, Guid fileGUID)
+        {
+            try
+            {
+                ClamClient clam = new ClamClient(ClamAVServer, ClamAVPort);
+
+               
+
+                var scanResult = await clam.SendAndScanFileAsync(sourceStream);
+
+                ScanResults result = ScanHistory.Find(x => x.FileGUID == fileGUID);
+
+                result.ScanResult = scanResult;
+            }
+            catch (Exception exception)
+            {
+                ScanResults result = ScanHistory.Find(x => x.FileGUID == fileGUID);
+
+                if (result == null)
+                {
+                    result = new ScanResults(fileGUID, exception.Message);
+                }
+                else
+                {
+                    result.ScanResult = new ClamScanResult(exception.Message);
+                }
+
+            }
+        }
+
 
         /// <summary>
         /// Scans an array of Base64 encoded bytes

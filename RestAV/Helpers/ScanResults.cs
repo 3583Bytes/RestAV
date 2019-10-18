@@ -26,4 +26,5 @@ namespace RestAV.Helpers
             ScanResult = new ClamScanResult(error);
         }
     }
+
 }
