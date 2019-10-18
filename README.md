@@ -1,28 +1,30 @@
 # RestAV
 Antivirus Rest API Running in Docker
 
-This is a .net core Web Rest API that will accept a JSON Post request.  This uses will run in a docker container that is defined in the solution but it depends on another container running ClamAV it will pull from:https://hub.docker.com/r/mkodockx/docker-clamav/
+This is a .net core Web Rest API that will accept a multipart/from-data Post request.  This will run in a docker container that is defined in the solution but it depends on another container running ClamAV it will pull from:https://hub.docker.com/r/mkodockx/docker-clamav/
 
-Parameters:
+Methods:
 
-Mode 0 = Synchronous 1= Asynchronous
-
-Request Example 
-
-{
-	"Mode":"0",
-	"FileData":"WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",
-	"FileName":"Test.txt"
-}
-
-Response Example
+ScanFile - Accepts a multipart/from-data file to scan and provides synchronous result:
 
 [
     "Result",
-    "Infected",
-    "File",
-    "stream",
-    "Virus Eicar-Test-Signature",
+    "Clean",
     "TotalSeconds",
-    "0.0197741"
+    "0.0295759"
+]
+
+
+ScanFileAsync - Accepts a multipart/from-data file to scan and provides a GUID which can be used to asynchrounously fetch a result
+
+[
+    "GUID",
+    "0cc52015-2217-4c20-be93-907fb680d6ae"
+]
+
+/api/RestAV/0cc52015-2217-4c20-be93-907fb680d6ae
+
+[
+    "Result",
+    "Clean"
 ]
