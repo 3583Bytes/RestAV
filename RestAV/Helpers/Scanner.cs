@@ -13,9 +13,9 @@ namespace RestAV.Helpers
         public static int ClamAVPort = 3310;
 
         //For Docker Deployment
-        //public static string ClamAVServer = "clamav-server";
-
-        public static string ClamAVServer = "localhost";
+        public static string ClamAVServer = "clamav-server";
+        //For Local Testing
+        //public static string ClamAVServer = "localhost";
         public static string ClamAVStatus = "";
 
         /// <summary>

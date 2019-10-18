@@ -1,5 +1,5 @@
 # RestAV
-Antivirus Rest API Running deployed with Docker
+.Net core REST API providing methods to scan files with ClamAV Antivirus running in Docker.
 
 This is a .Net core Web Rest API that will accept a multipart/from-data Post request.  
 
@@ -41,7 +41,19 @@ Returns:
 ]
 ```
 
-[Postman](https://github.com/3583Bytes/RestAV/blob/master/RestAV.postman_collection.json) file provided for testing.
+## Run:
+
+build solution then run 
+
+```
+docker-compose up
+```
+
+FYI: Running the solution in Docker via Visual Studio will only run the RestAV docker image withough the require ClamAV container.  Hence the need to run docker-compose up.
+
+## Test:
+
+[Postman Collection](https://github.com/3583Bytes/RestAV/blob/master/RestAV.postman_collection.json) provided for testing.
 
 
 
