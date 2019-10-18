@@ -5,7 +5,7 @@ This is a .Net core Web Rest API that will accept a multipart/from-data Post req
 
 This will run in a docker container that is defined in [docker-compose.yml](https://github.com/3583Bytes/RestAV/blob/master/docker-compose.yml) which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.
 
-##RestAV API Methods:
+## RestAV API Methods:
 
 ### Post:
 
