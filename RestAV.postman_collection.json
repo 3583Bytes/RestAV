@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "752a5318-f970-451e-b0a3-707b1321e264",
+		"name": "RestAV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "InitialTest",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44361/api/RestAV",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44361",
+					"path": [
+						"api",
+						"RestAV"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetScanResult",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:44361/api/RestAV",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44361",
+					"path": [
+						"api",
+						"RestAV"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ScanFile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "multipart/from-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ScanFile",
+							"type": "file",
+							"src": "/C:/Users/adam.berent/Downloads/file-upload-demo-master.zip"
+						},
+						{
+							"key": "APIKey",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44361/api/RestAV/ScanFile",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44361",
+					"path": [
+						"api",
+						"RestAV",
+						"ScanFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ScanFileAsync",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "multipart/from-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ScanFile",
+							"type": "file",
+							"src": "/C:/Users/adam.berent/Downloads/file-upload-demo-master.zip"
+						},
+						{
+							"key": "APIKey",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:44361/api/RestAV/ScanFileAsync",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44361",
+					"path": [
+						"api",
+						"RestAV",
+						"ScanFileAsync"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
