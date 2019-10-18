@@ -36,6 +36,11 @@ namespace RestAV.Controllers
         [HttpGet("{guid}")]
         public ActionResult<string[]> Get(string guid)
         {
+            if (guid is null)
+            {
+                return new string[] { "Error", "Missing GUID" };
+            }
+
             Guid fileGUID = new Guid(guid);
 
             ScanResults result = Scanner.ScanHistory.Find(x => x.FileGUID == fileGUID);
@@ -62,7 +67,11 @@ namespace RestAV.Controllers
         [HttpPost("ScanFileAsync")]
         public string[] PostAsync([FromForm] IFormFile ScanFile, [FromForm] String APIKey)
         {
-           
+            if (ScanFile is null)
+            {
+                return new string[] { "Error", "Missing ScanFile" };
+            }
+
             if (ScanFile.Length > 0)
             {
                 Guid fileGUID = Guid.NewGuid();
@@ -79,13 +88,17 @@ namespace RestAV.Controllers
             }
 
             return new string[] { "Error ", "No File Stream Found" };
-
         }
 
         // GET api/RestAV/FileSync
         [HttpPost("ScanFile")]
         public string[] Post([FromForm] IFormFile ScanFile, [FromForm] String APIKey)
         {
+            if (ScanFile is null)
+            {
+                return new string[] { "Error", "Missing ScanFile" };
+            }
+
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
@@ -116,11 +129,9 @@ namespace RestAV.Controllers
                 }
 
                 return new string[] { "Scanning ", fileGUID.ToString() };
-                
             }
 
-            return new string[] { "Error ", "No File Stream Found" };
-
+            return new string[] { "Error ", "Invalid ScanFile" };
         }
 
     }

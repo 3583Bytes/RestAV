@@ -91,7 +91,7 @@
 						{
 							"key": "ScanFile",
 							"type": "file",
-							"src": "/C:/Users/adam.berent/Downloads/file-upload-demo-master.zip"
+							"src": []
 						},
 						{
 							"key": "APIKey",
@@ -101,12 +101,12 @@
 					]
 				},
 				"url": {
-					"raw": "https://localhost:44361/api/RestAV/ScanFile",
+					"raw": "https://localhost:44371/api/RestAV/ScanFile",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "44361",
+					"port": "44371",
 					"path": [
 						"api",
 						"RestAV",
@@ -134,7 +134,7 @@
 						{
 							"key": "ScanFile",
 							"type": "file",
-							"src": "/C:/Users/adam.berent/Downloads/file-upload-demo-master.zip"
+							"src": []
 						},
 						{
 							"key": "APIKey",
@@ -144,12 +144,12 @@
 					]
 				},
 				"url": {
-					"raw": "https://localhost:44361/api/RestAV/ScanFileAsync",
+					"raw": "https://localhost:443/api/RestAV/ScanFileAsync",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "44361",
+					"port": "443",
 					"path": [
 						"api",
 						"RestAV",

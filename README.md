@@ -55,5 +55,11 @@ FYI: Running the solution in Docker via Visual Studio will only run the RestAV d
 
 [Postman Collection](https://github.com/3583Bytes/RestAV/blob/master/RestAV.postman_collection.json) provided for testing.
 
+## Restart
+
+To remove all containers & images (to start again)
+```
+docker system prune -a
+```
 
 
