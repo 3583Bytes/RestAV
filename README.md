@@ -9,7 +9,7 @@ This will run in a docker container that is defined in [docker-compose.yml](http
 
 ### Post:
 
-*ScanFile*: Accepts a multipart/from-data file to scan and provides synchronous result:
+*/api/RestAV/ScanFile*: Accepts a multipart/from-data file to scan and provides synchronous result:
 Returns:
 [
     "Result",
