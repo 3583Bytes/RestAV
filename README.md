@@ -12,8 +12,8 @@ This will run in a docker container that is defined in [docker-compose.yml](http
 */api/RestAV/ScanFile*: Accepts a multipart/from-data file to scan and provides synchronous result:
 Returns:
 ```[
->    "Result",
->    "Clean",
+    "Result",
+    "Clean",
     "TotalSeconds",
     "0.0295759"
 ]```
