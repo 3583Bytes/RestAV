@@ -2,10 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53984",
-      "sslPort": 44361
-    }
+		"iisExpress": {
+			"applicationUrl": "http://localhost:8080",
+			"sslPort": 40443
+		}
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
@@ -24,19 +24,19 @@
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development"
 			},
-			"applicationUrl": "https://localhost:5001;http://localhost:5000"
+			"applicationUrl": "https://localhost:40443;http://localhost:8080"
 		},
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/RestAV",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
-        "ASPNETCORE_HTTPS_PORT": "44362"
-      },
-      "httpPort": 53988,
-      "useSSL": true,
-      "sslPort": 44362
-    }
+		"Docker": {
+			"commandName": "Docker",
+			"launchBrowser": true,
+			"launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/RestAV",
+			"environmentVariables": {
+				"ASPNETCORE_URLS": "https://+:443;http://+:80",
+				"ASPNETCORE_HTTPS_PORT": "40443"
+			},
+			"httpPort": 8080,
+			"useSSL": true,
+			"sslPort": 40443
+		}
   }
 }

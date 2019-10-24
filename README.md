@@ -3,7 +3,37 @@
 
 This is a .Net core Web Rest API that will accept a multipart/from-data Post request.  
 
-This will run in a docker container that is defined in [docker-compose.yml](https://github.com/3583Bytes/RestAV/blob/master/docker-compose.yml) which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.
+This will run in a docker container that is defined in a docker-compose.yml which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.  Although there is a docker-compose file in the solution, it does not allow you to specify your own certificates. 
+
+## Running:
+
+Create a directory call Cert for a Volume that will hold our certificate and place your certificate in.  Replace certificatepassword in the docker compose sample blow as well as Certificate.pfx with the name of your pfx file.
+
+```
+version: '3.4'
+
+services:
+  clamav-server:
+    image: mkodockx/docker-clamav  
+    networks:
+      - clamav
+  restav:
+    image: 3583bytes/restav
+    environment:
+      - Kestrel__Certificates__Default__Path=/root/.dotnet/https/Certificate.pfx
+      - Kestrel__Certificates__Default__Password=certificatepassword
+    ports:
+      - "8080:80"
+      - "40443:443"
+    networks:
+      - clamav
+    volumes:
+      - ./Cert:/root/.dotnet/https/:ro
+networks:
+   clamav:
+```
+
+
 
 ## Docker Hub:
 
