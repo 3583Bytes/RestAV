@@ -7,7 +7,7 @@ This will run in a docker container that is defined in a docker-compose.yml whic
 
 ## Running:
 
-Create a directory call Cert for a Volume that will hold our certificate and place your certificate in.  Replace certificatepassword in the docker compose sample blow. Replace Certificate.pfx with the name of your pfx file.
+Create a directory called *Cert* for a volume that will hold our certificate and place your certificate in.  Replace *certificatepassword* in the docker compose sample blow. Replace *Certificate.pfx* with the name of your pfx file.
 
 ```
 version: '3.4'
