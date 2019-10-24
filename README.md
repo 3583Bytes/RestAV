@@ -3,7 +3,7 @@
 
 This is a .Net core Web Rest API that will accept a multipart/from-data Post request.  
 
-This will run in a docker container that is defined in a docker-compose.yml which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.  Although there is a docker-compose file in the solution, it does not allow you to specify your own certificates. 
+This will run in a docker container that is defined in a docker-compose.yml which has a dependency on [ClamAV](https://hub.docker.com/r/mkodockx/docker-clamav/) container.
 
 ## Running:
 
